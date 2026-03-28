@@ -32,28 +32,41 @@ app/
 ├── layout.tsx              # Root layout with metadata
 ├── page.tsx                # Home page with auth status
 ├── globals.css             # Tailwind CSS
-├── favicon.ico
+├── proxy.ts                # Session refresh proxy
 ├── auth/
 │   ├── login/
 │   │   └── page.tsx        # Login page
 │   └── callback/
 │       └── route.ts        # OAuth callback handler
 ├── admin/
+│   ├── layout.tsx          # Admin layout with shell
 │   └── page.tsx            # Protected admin dashboard
 └── forbidden/
     └── page.tsx            # Access denied page
 
+components/
+├── ui/
+│   ├── button.tsx          # Reusable button component
+│   ├── card.tsx            # Card components
+│   └── input.tsx           # Input component
+├── layout/
+│   ├── site-header.tsx     # Site header with navigation
+│   └── admin-shell.tsx     # Admin page shell
+└── auth/
+    └── login-form.tsx      # Login form component
+
 lib/
+├── utils.ts                # Utility functions (cn)
 ├── supabase/
 │   ├── client.ts           # Browser client (client-side)
-│   └── server.ts           # Server client (server-side, SSR)
+│   ├── server.ts           # Server client (server-side, SSR)
+│   └── middleware.ts       # Session update helper
 └── auth/
     ├── auth-service.ts     # Main auth service (login, logout, requireAuth)
     ├── get-user-role.ts    # Role-based access helper
     └── logout.ts           # Server action for logout
 
-middleware.ts              # Session refresh middleware
-.env.example              # Environment variables template
+.env.example                # Environment variables template
 ```
 
 ## Setup Instructions
@@ -113,6 +126,31 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Deployment
+
+### Vercel (Recommended)
+
+1. **Connect Repository**
+   - Import your GitHub repository to Vercel
+   - Vercel will detect Next.js automatically
+
+2. **Configure Environment Variables**
+   - In Vercel dashboard, go to your project settings
+   - Add environment variables:
+     - `NEXT_PUBLIC_SUPABASE_URL`
+     - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+
+3. **Deploy**
+   - Push to your main branch or deploy manually
+   - Vercel will build and deploy automatically
+
+### Other Platforms
+
+For Netlify, Railway, or other platforms:
+- Set the same environment variables
+- Ensure the build command is `npm run build`
+- Set the output directory to `.next` (or leave default for most platforms)
 
 ## How It Works
 
